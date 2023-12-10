@@ -9,18 +9,21 @@ function saveScore() {
 
 	let name = nameInput.value;
 	let score = scoreInput.value;
-	let obj = {name, score};
 
-	let scoreArr = localStorage.getItem("highScore");
+	let scoreArr = [];
+
+	let value = localStorage.getItem("scores");
 	
-	 if(scoreArr !== null){
-		 let newArr = [...scoreArr];
-		   newArr.push(obj);
-		   localStorage.setItem("highScore", JSON.stringify(newArr));
+	if(value !== null){
+		   scoreArr = JSON.parse(value)
+		   scoreArr.push({name:name, score: parseInt(score)})
+		   localStorage.setItem("scores", JSON.stringify(scoreArr));
 	 }
 	else{
-		localStorage.setItem("highScore", JSON.stringify([{...obj}]));
+		scoreArr.push({name:name, score: parseInt(score)})
+		localStorage.setItem("scores", JSON.stringify(scoreArr));
 	}
+	
   showScores();
 }
 
@@ -28,16 +31,17 @@ function saveScore() {
 function showScores() {
   // complete the code
      scores.innerHTML = "";  // clear the prevoius data 
-    // localStorage.removeItem("highScore")  // testing perpose
+    //localStorage.removeItem("scores")  // testing perpose
 	
 	
-	let objArr = JSON.parse(localStorage.getItem("highScore"));
+	let objArr = JSON.parse(localStorage.getItem("scores"));
 
 	if(objArr === null){
 		scores.innerHTML = "No scores yet";
 	}
 	else{
 		let ta = document.createElement("table");
+		     ta.id = "scores table tr";
 		
 		let th1 = document.createElement("th");
 		     th1.innerHTML = "Name"
