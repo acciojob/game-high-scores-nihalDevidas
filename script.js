@@ -40,15 +40,16 @@ function showScores() {
 		scores.innerHTML = "No scores yet";
 	}
 	else{
-         let high = {name:"", score : 0};
-
-		 objArr.forEach((obj)=>{
-			 if(high.score < obj.score){
-				 high.name = obj.name;
-				 high.score = obj.score;
-			 }
-		 });
-		
+		objArr.sort((x,y)=>{
+			if(x.score < y.score){
+				return 1;
+			}
+			if(x.score > y.score){
+				return -1;
+			}
+			return 0;
+		})
+         
 		let ta = document.createElement("table");
 		     ta.id = "scores table tr";
 		
@@ -72,14 +73,7 @@ function showScores() {
 		   ta.append(tr2)  
 		})
 
-		     let td1 = document.createElement("td");
-				  td1.innerHTML = high.name;
-			 let td2 = document.createElement("td");
-				  td2.innerHTML = high.score
-			 let tr2 = document.createElement("tr");
-				  tr2.append(td1,td2);
-		      ta.append(tr2);
-
+		    
 	  scores.append(ta)   // add the whole table to score div	
 	}
 	
